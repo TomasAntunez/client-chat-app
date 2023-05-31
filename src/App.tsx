@@ -1,9 +1,14 @@
 import { AppRouter } from "./router/AppRouter";
+import { ThemeConfig } from "./config/Theme";
 
 
 function App() {
   return (
-    <AppRouter />
+    <>
+      <ThemeConfig>
+        <AppRouter />
+      </ThemeConfig>
+    </>
   );
 }
 
