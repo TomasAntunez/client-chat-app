@@ -20,7 +20,7 @@ export const LoginPage: React.FC<{}> = () => {
 
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Link to="/auth/register">
-            <Button href="/auth/register" sx={{ marginTop: 4 }}>New Account?</Button>
+            <Button sx={{ marginTop: 4 }}>New Account?</Button>
           </Link>
 
           <Button size="large" variant="outlined" sx={{ marginTop: 4 }}>
