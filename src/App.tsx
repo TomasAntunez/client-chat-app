@@ -4,12 +4,13 @@ import { ThemeConfig } from "./config/Theme";
 
 function App() {
   return (
-    <>
-      <ThemeConfig>
-        <AppRouter />
-      </ThemeConfig>
-    </>
+    <ThemeConfig>
+      <AppRouter />
+    </ThemeConfig>
   );
 }
 
 export default App;
+
+
+// TODO: refactor folder architecture

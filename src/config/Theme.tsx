@@ -7,10 +7,11 @@ type ThemeProp = {
 }
 
 
-enum themePalette {
+export enum themePalette {
   BG = "#140325",
   SECONDARY_BG = "#28073D",
   MAIN_COLOR = "#F274C4",
+  SECONDARY_COLOR = "#400B61",
   GLOBAL_FONT = "'JetBrains Mono', monospace"
 }
 
@@ -23,6 +24,9 @@ const theme = createTheme({
     },
     primary: {
       main: themePalette.MAIN_COLOR
+    },
+    secondary: {
+      main: themePalette.SECONDARY_COLOR
     },
     text: {
       primary: themePalette.MAIN_COLOR

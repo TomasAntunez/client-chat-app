@@ -26,7 +26,7 @@ export const RegisterPage: React.FC<{}> = () => {
           </Link>
 
           <Button size="large" variant="outlined" sx={{ marginTop: 4 }}>
-            Sign up
+            Create Account
           </Button>
         </Box>
       </Paper>
