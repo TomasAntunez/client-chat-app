@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, Button, TextField } from '@mui/material';
 
-import { themePalette } from '../../../../config/Theme';
+import { themePalette } from '../..';
 
 
 export const MessageForm: React.FC<{}> = () => {
@@ -12,12 +12,13 @@ export const MessageForm: React.FC<{}> = () => {
         position: "static",
         width: '100%',
         borderRadius: 0,
+        borderTop: 1,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         px: 6,
         pb: 6,
-        pt: 10,
+        pt: 8,
         height: 60,
         boxShadow: 'none',
         background: `linear-gradient(to top, ${themePalette.SECONDARY_BG}, ${themePalette.SECONDARY_COLOR})`

@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { Box, Stack } from '@mui/material';
-import { InputMessage } from './InputMessage';
-import { OutgoingMessage } from './OutgoingMessage';
+import { Message } from './Message';
 
 
 export const Messages: React.FC<{}> = () => {
@@ -18,7 +17,7 @@ export const Messages: React.FC<{}> = () => {
         backgroundColor: 'secondary.main',
         pl: 5,
         pr: 8,
-        py: 0,
+        py: 1,
       }}
     >
       <Stack spacing={1.4}>
@@ -26,8 +25,8 @@ export const Messages: React.FC<{}> = () => {
           data.length &&
             data.map( item => (
               (item % 2)
-                ? <InputMessage key={item}/>
-                : <OutgoingMessage key={item}/>
+                ? <Message key={item} type='received' />
+                : <Message key={item} type='sent' />
             ))
         }
       </Stack>

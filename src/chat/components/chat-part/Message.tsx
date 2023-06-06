@@ -1,20 +1,24 @@
 import React from 'react'
 import { Box, Typography }from '@mui/material';
 
-import { themePalette } from '../../../../config/Theme';
+import { themePalette } from '../..';
 
 
-export const InputMessage: React.FC<{}> = () => {
+type MessageProps = {
+  type: 'sent' | 'received'
+}
+
+export const Message: React.FC<MessageProps> = ({ type }) => {
   return (
     <Box sx={{
       width: '100%',
       display: 'flex',
-      justifyContent: 'right',
+      justifyContent: `${ (type === 'sent') ? 'right' : 'left' }`
     }}>
       <Box
         sx={{
           maxWidth: '80%',
-          bgcolor: `${themePalette.SECONDARY_BG}`,
+          bgcolor: `${ (type === 'sent') ? themePalette.SECONDARY_BG : themePalette.BG }`,
           py: 1.5,
           px: 3,
           borderRadius: 3

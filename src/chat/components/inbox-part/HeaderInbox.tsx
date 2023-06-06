@@ -26,7 +26,7 @@ export const HeaderInbox: React.FC<{}> = () => {
         variant='outlined'
         sx={{ py: 0, fontSize: 15 }}
       >
-        Close Chat
+        My Profile
       </Button>
     </Paper>
   )

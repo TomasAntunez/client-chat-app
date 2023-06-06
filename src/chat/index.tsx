@@ -1,0 +1,2 @@
+
+export { themePalette } from '../config';

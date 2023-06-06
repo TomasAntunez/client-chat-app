@@ -1,5 +1,5 @@
-import { AppRouter } from "./router/AppRouter";
-import { ThemeConfig } from "./config/Theme";
+import { AppRouter } from "./routes";
+import { ThemeConfig } from "./config";
 
 
 function App() {
@@ -11,6 +11,3 @@ function App() {
 }
 
 export default App;
-
-
-// TODO: refactor folder architecture

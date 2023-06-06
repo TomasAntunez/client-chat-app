@@ -1,10 +1,11 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { authRoutes, routes } from '../config/routes';
-import { LoginPage } from '../pages/login';
-import { RegisterPage } from '../pages/register';
-import { AuthLayout } from '../layouts/auth-layout';
+import { authRoutes } from '../config';
+import { routes } from '../../config';
+import { LoginPage } from '../pages';
+import { RegisterPage } from '../pages';
+import { AuthLayout } from '../layouts';
 
 
 export const AuthRouter: React.FC<{}> = () => {

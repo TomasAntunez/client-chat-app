@@ -10,6 +10,8 @@ export const HeaderChat: React.FC<{}> = () => {
         position: "static",
         width: '100%',
         borderRadius: 0,
+        boxShadow: 'none',
+        borderBottom: 1,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -18,7 +20,7 @@ export const HeaderChat: React.FC<{}> = () => {
       }}
     >
       <Typography variant='h4'>
-        Recent
+        Contact
       </Typography>
 
       <Button
