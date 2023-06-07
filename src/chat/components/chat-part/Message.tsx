@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography }from '@mui/material';
 
-import { themePalette } from '../..';
+import { themePalette } from '../../imports';
 
 
 type MessageProps = {

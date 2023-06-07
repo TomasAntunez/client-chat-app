@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+import { routes } from '../imports';
 import { authRoutes } from '../config';
-import { routes } from '../../config';
 import { LoginPage } from '../pages';
 import { RegisterPage } from '../pages';
 import { AuthLayout } from '../layouts';

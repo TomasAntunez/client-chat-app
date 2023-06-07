@@ -1,9 +1,9 @@
 import React from "react"
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import { routes } from '../config';
-import { AuthRouter } from '../auth/routes';
-import { ChatPage } from '../chat/pages';
+import { routes } from './config';
+import { AuthRouter } from './auth/routes';
+import { ChatPage } from './chat/pages';
 
 
 export const AppRouter: React.FC<{}> = () => {

@@ -1,11 +1,15 @@
-import { AppRouter } from "./routes";
+import { AppRouter } from "./Router";
 import { ThemeConfig } from "./config";
+
+import { AuthProvider } from './auth/context';
 
 
 function App() {
   return (
     <ThemeConfig>
-      <AppRouter />
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
     </ThemeConfig>
   );
 }
