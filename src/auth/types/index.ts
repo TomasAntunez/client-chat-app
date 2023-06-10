@@ -9,10 +9,15 @@ export type AuthScheme = {
     logged: boolean;
 }
 
+
 export type LoginScheme = {
     email: string;
     password: string;
+    rememberme: boolean;
 }
+
+export type UserLogin = Omit< LoginScheme, "rememberme" >;
+
 
 export type RegisterScheme = {
     name: string;
@@ -24,7 +29,7 @@ export type RegisterScheme = {
 // FUNCTIONS
 
 export interface Login {
-    (scheme: LoginScheme): void;
+    (scheme: UserLogin): void;
 }
 
 export interface Register {

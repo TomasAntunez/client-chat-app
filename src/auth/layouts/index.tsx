@@ -6,7 +6,7 @@ import { Container, Box } from '@mui/material';
 export const AuthLayout: React.FC<{}> = () => {
   return (
     <Container maxWidth="sm">
-      <Box marginTop={10}>
+      <Box marginTop={17}>
         <Outlet />
       </Box>
     </Container>

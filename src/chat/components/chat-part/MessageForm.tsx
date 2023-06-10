@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paper, Button, TextField } from '@mui/material';
 
-import { themePalette } from '../../imports';
+import { themePalette } from '../..';
 
 
 export const MessageForm: React.FC<{}> = () => {

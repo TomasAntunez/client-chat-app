@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { routes } from '../imports';
+import { routes } from '../';
 import { authRoutes } from '../config';
 import { LoginPage } from '../pages';
 import { RegisterPage } from '../pages';
