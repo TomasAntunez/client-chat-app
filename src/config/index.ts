@@ -1,3 +1,3 @@
 
 export { routes } from './routes';
-export { ThemeConfig, themePalette } from './Theme';
+export { ThemeConfig, themePalette } from './theme';

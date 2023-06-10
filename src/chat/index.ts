@@ -1,3 +1,7 @@
 
 // IMPORTS
-export { themePalette } from '../config';
+export * from '../config';
+
+
+// EXPORTS
+export * from './pages';

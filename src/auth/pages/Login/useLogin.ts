@@ -4,6 +4,8 @@ import { ValidationError } from 'yup';
 import { LoginScheme } from '../../types';
 import { loginSchema } from '../../validators';
 
+import { useAlert } from '../..';
+
 
 const initialState: LoginScheme = {
   email: '',
@@ -12,6 +14,9 @@ const initialState: LoginScheme = {
 };
 
 export const useLogin = () => {
+
+  const { showError } = useAlert();
+
   const [ formData, setFormData ] = useState<LoginScheme>( initialState );
 
   const [ submitButtonDisabled ] = useState<boolean>( false );
@@ -48,18 +53,20 @@ export const useLogin = () => {
   const handleSubmit = async ( e: React.FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
 
-    console.log(formData)
-
     try {
       const cleanData = await loginSchema.validate(formData);
       console.log(cleanData);
+
     } catch (error) {
       if ( error instanceof ValidationError ) {
-        console.log('is ValidationError')
-        console.log(error.message);
+        if (error.message === 'required') {
+          showError('Both fields are required');
+          return
+        }
+        showError('The email or the password are incorrect');
         return
       }
-      console.log(error);
+      showError('There was a mistake, try again later');
       return
     }
 
