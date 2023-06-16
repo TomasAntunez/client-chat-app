@@ -1,3 +1,4 @@
 
-export { routes } from './routes';
-export { ThemeConfig, themePalette } from './theme';
+export * from './routes';
+export *from './theme';
+export * from './fetch';

@@ -1,21 +1,26 @@
 import { useState, useEffect } from 'react';
 import { ValidationError } from 'yup';
+import { useNavigate } from 'react-router-dom';
 
-import { LoginScheme } from '../../types';
+import { LoginScheme, RememberedUser } from '../../types';
 import { loginSchema } from '../../validators';
+import { useAuth } from '../../hooks';
 
-import { useAlert } from '../..';
+import { useAlert, objLocalStorage, routes } from '../..';
 
 
 const initialState: LoginScheme = {
   email: '',
   password: '',
-  rememberme: true
+  rememberme: false
 };
 
 export const useLogin = () => {
 
+  const navigate = useNavigate();
+
   const { showError } = useAlert();
+  const { login } = useAuth();
 
   const [ formData, setFormData ] = useState<LoginScheme>( initialState );
 
@@ -23,11 +28,16 @@ export const useLogin = () => {
 
 
   useEffect( () => {
-    const email = localStorage.getItem('email');
-    if ( email ) {
-      setFormData({ ...formData, email });
+    try {
+      const { email, rememberme } = objLocalStorage.get<RememberedUser>( 'rememberedUser' );
+      setFormData( formData => ({
+        ...formData,
+        email,
+        rememberme
+      }));
+    } catch (error) {
+      return;
     }
-    // eslint-disable-next-line
   }, []);
 
 
@@ -40,8 +50,9 @@ export const useLogin = () => {
     });
   };
 
+
   const handleChangeCheckbox = (
-    event: React.SyntheticEvent<Element, Event>,
+    _: React.SyntheticEvent<Element, Event>,
     checked: boolean
   ) => {
     setFormData({
@@ -50,12 +61,14 @@ export const useLogin = () => {
     });
   };
 
+
   const handleSubmit = async ( e: React.FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
 
+    let cleanData: LoginScheme;
+
     try {
-      const cleanData = await loginSchema.validate(formData);
-      console.log(cleanData);
+      cleanData = await loginSchema.validate(formData);
 
     } catch (error) {
       if ( error instanceof ValidationError ) {
@@ -71,13 +84,29 @@ export const useLogin = () => {
     }
 
 
-    if ( formData.rememberme ) {
-      localStorage.setItem( 'email', formData.email );
-    } else {
-      localStorage.removeItem( 'email' );
+    const { rememberme, email, password } = cleanData;
+    
+    try {
+      if ( rememberme ) {
+        const rememberedUser: RememberedUser = { email, rememberme };
+        objLocalStorage.save( 'rememberedUser', rememberedUser );
+
+      } else {
+        objLocalStorage.remove( 'rememberedUser' )
+      }
+      
+    } catch (error) {
+      showError('There was a mistake, try again later');
+    }
+    
+
+    const error = await login({ email, password });
+    if (error) {
+      showError(error);
+      return;
     }
 
-    // TODO: send request
+    navigate( `/${routes.CHAT}` );
   };
 
   return {

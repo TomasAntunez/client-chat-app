@@ -1,9 +1,11 @@
 import React, { createContext, useState, useCallback } from 'react';
 
 import { AuthScheme, Login, Register } from '../types';
+import { authenticateUser } from '../services';
 
 
 type ContextProps = {
+  auth: AuthScheme;
   login: Login;
   register: Register;
   verifyToken(): void;
@@ -27,8 +29,22 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) 
   const [ auth, setAuth ] = useState<AuthScheme>( initialState );
 
 
-  const login: Login = ({ email, password }) => {
+  const login: Login = async ( userData ) => {
+    const { data, error } = await authenticateUser(userData);
+    if ( error ) return error;
+    
+    if (data.ok) {
+      localStorage.setItem( 'token', data.token );
 
+      const { user } = data;
+      setAuth({
+        uid: user.uid,
+        name: user.name,
+        email: user.email,
+        checking: false,
+        logged: true
+      });
+    }
   };
 
   const register: Register = ({ name, email, password }) => {
@@ -46,6 +62,7 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) 
 
   return (
     <AuthContext.Provider value={{
+      auth,
       login,
       register,
       verifyToken,

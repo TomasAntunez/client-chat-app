@@ -1,4 +1,9 @@
 
+// HELP TYPES
+
+type error = string;
+
+
 // SCHEMES
 
 export type AuthScheme = {
@@ -18,6 +23,8 @@ export type LoginScheme = {
 
 export type UserLogin = Omit< LoginScheme, "rememberme" >;
 
+export type RememberedUser = Omit< LoginScheme, "password" >;
+
 
 export type RegisterScheme = {
     name: string;
@@ -29,7 +36,7 @@ export type RegisterScheme = {
 // FUNCTIONS
 
 export interface Login {
-    (scheme: UserLogin): void;
+    (scheme: UserLogin): Promise<error | undefined>;
 }
 
 export interface Register {

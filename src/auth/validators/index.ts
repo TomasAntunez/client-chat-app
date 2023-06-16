@@ -1,17 +1,24 @@
-import { boolean, object, ObjectSchema, string } from 'yup';
+import { boolean, object, ObjectSchema, string, setLocale } from 'yup';
 
-import { UserLogin } from '../types';
+import { LoginScheme } from '../types';
 
 
-export const loginSchema: ObjectSchema<UserLogin> = object().shape({
+setLocale({
+  mixed: {
+    required: 'required'
+  }
+});
+
+
+export const loginSchema: ObjectSchema<LoginScheme> = object().shape({
   rememberme: boolean().required(),
   password: string()
-    .required('required')
+    .required()
     .min(3)
     .max(30),
   email: string()
     .trim()
-    .required('required')
+    .required()
     .min(3)
     .max(30)
     .email()

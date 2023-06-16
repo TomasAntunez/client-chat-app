@@ -1,8 +1,8 @@
 
 export enum routes {
     ANY = "*",
-    CHAT = "/",
-    AUTH = "auth/*"
+    CHAT = "",
+    AUTH = "auth"
 }
 
 export enum authRoutes {

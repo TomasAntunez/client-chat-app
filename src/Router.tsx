@@ -10,7 +10,7 @@ export const AppRouter: React.FC<{}> = () => {
   return (
     <Router>
       <Routes>
-        <Route path={ routes.AUTH } element={ <AuthRouter /> } />
+        <Route path={ `${routes.AUTH}/*` } element={ <AuthRouter /> } />
         <Route path={ routes.CHAT } element={ <ChatPage /> } />
 
         <Route path={ routes.ANY } element={ <Navigate to={ routes.CHAT } /> } />
