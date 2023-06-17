@@ -1,28 +1,49 @@
+import { ResponseError } from '../types';
 
 
 export const objLocalStorage = {
 
   save: ( name: string, object: Object ): void | never => {
-    if ( typeof object === 'object' ) {
-      const stringObject: string = JSON.stringify(object);
-      localStorage.setItem( name, stringObject );
-      return
+    try {
+      if ( typeof object === 'object' ) {
+        const stringObject: string = JSON.stringify(object);
+        localStorage.setItem( name, stringObject );
+        return
+      }
+      throw new Error();
+
+    } catch (error) {
+      console.log(error);
     }
-    throw new Error();
   },
   
-  get: < T >( name: string ): T | never => {
-    const object = localStorage.getItem(name);
-    const parsedObject = JSON.parse(object as string);
-    if ( typeof parsedObject === 'object' ) {
-      return parsedObject;
+  get: < T >( name: string ): T | null => {
+    try {
+      const object = localStorage.getItem(name);
+      if (!object) throw new Error();
+      const parsedObject = JSON.parse(object as string);
+      if ( typeof parsedObject === 'object' ) {
+        return parsedObject;
+      }
+      throw new Error();
+
+    } catch (error) {
+      console.log(error)
+      return null;
     }
-    throw new Error();
   },
 
   remove: ( name: string ) => {
     localStorage.removeItem(name);
   }
+  
 }
 
 
+export const reportError = (error: unknown): ResponseError => {
+  console.log(error);
+  return {
+    ok: false,
+    msg: 'Something is not right'
+  };
+};

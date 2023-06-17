@@ -28,15 +28,13 @@ export const useLogin = () => {
 
 
   useEffect( () => {
-    try {
-      const { email, rememberme } = objLocalStorage.get<RememberedUser>( 'rememberedUser' );
+    const user = objLocalStorage.get<RememberedUser>( 'rememberedUser' );
+    if (user) {
       setFormData( formData => ({
         ...formData,
-        email,
-        rememberme
+        email: user.email,
+        rememberme: user.rememberme
       }));
-    } catch (error) {
-      return;
     }
   }, []);
 
@@ -79,24 +77,19 @@ export const useLogin = () => {
         showError('The email or the password are incorrect');
         return
       }
-      showError('There was a mistake, try again later');
+      showError('There was a mistake');
       return
     }
 
 
     const { rememberme, email, password } = cleanData;
     
-    try {
-      if ( rememberme ) {
-        const rememberedUser: RememberedUser = { email, rememberme };
-        objLocalStorage.save( 'rememberedUser', rememberedUser );
+    if ( rememberme ) {
+      const rememberedUser: RememberedUser = { email, rememberme };
+      objLocalStorage.save( 'rememberedUser', rememberedUser );
 
-      } else {
-        objLocalStorage.remove( 'rememberedUser' )
-      }
-      
-    } catch (error) {
-      showError('There was a mistake, try again later');
+    } else {
+      objLocalStorage.remove( 'rememberedUser' )
     }
     
 

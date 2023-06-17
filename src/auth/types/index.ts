@@ -1,9 +1,4 @@
 
-// HELP TYPES
-
-type error = string;
-
-
 // SCHEMES
 
 export type AuthScheme = {
@@ -33,12 +28,4 @@ export type RegisterScheme = {
 }
 
 
-// FUNCTIONS
-
-export interface Login {
-    (scheme: UserLogin): Promise<error | undefined>;
-}
-
-export interface Register {
-    (scheme: RegisterScheme): void;
-}
+export * from './response-types';

@@ -1,22 +1,28 @@
-import { queryAPI, ResponseError } from '..';
-import { UserLogin } from '../types';
+import { queryAPI, reportError, QueryResultError, ResponseError } from '..';
+import { UserLogin, LoginResponse, LoginResponseOk } from '../types';
 
 
-type Result = {
-  data?: any;
-  error?: string;
-}
-
-
-export const authenticateUser = async ( data: UserLogin ): Promise<Result> => {
+export const authenticateUser = async (
+  userLoginData: UserLogin
+): Promise< LoginResponseOk | ResponseError > => {
   try {
+    const result = await queryAPI<LoginResponse>({
+      url: 'auth/login',
+      method: 'POST',
+      data: userLoginData
+    });
+    
+    if ( result instanceof QueryResultError ) return {
+      ok: false,
+      msg: 'The email or the password are incorrect'
+    }
+
     return {
-      data: await queryAPI({ url: 'auth/login', method: 'POST', data })
-    }
+      ok: true,
+      result
+    };
+
   } catch (error) {
-    if ( error instanceof ResponseError ) {
-      return { error: 'The email or password is wrong' }
-    }
-    return { error: 'There was a mistake' };
+    return reportError(error);
   }
 };

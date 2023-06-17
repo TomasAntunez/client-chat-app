@@ -1,15 +1,23 @@
 import { Params }  from '../types';
-import { ResponseError } from '../custom';
 
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-export const queryAPI = async ({
+
+export class QueryResultError {
+  constructor(
+    public status: number,
+    public detail: any
+  ) {}
+}
+
+
+export const queryAPI = async <ResponseData = any>({
   url,
   method = 'GET',
   withAuth = false,
   data = null
-}: Params ) => {
+}: Params ): Promise< ResponseData | QueryResultError > => {
 
   const headers = new Headers({ "Content-type": 'application/json' });
 
@@ -24,11 +32,9 @@ export const queryAPI = async ({
     body: JSON.stringify(data)
   });
 
-  const result = await response.json();
+  const result: ResponseData | any = await response.json();
 
-  if ( response.ok ) {
-    return result;
-  }
+  if ( response.ok ) return result;
 
-  throw new ResponseError( result, response.status );
+  return new QueryResultError( response.status, result );
 };

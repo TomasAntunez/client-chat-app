@@ -9,3 +9,9 @@ export type Params = {
   withAuth?: WithAuth;
   data?: Object | null;
 };
+
+
+export type ResponseError = {
+  ok: false;
+  msg: string;
+} ;

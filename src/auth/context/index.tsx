@@ -1,13 +1,13 @@
 import React, { createContext, useState, useCallback } from 'react';
 
-import { AuthScheme, Login, Register } from '../types';
+import { AuthScheme, UserLogin } from '../types';
 import { authenticateUser } from '../services';
 
 
 type ContextProps = {
   auth: AuthScheme;
-  login: Login;
-  register: Register;
+  login: (data: UserLogin) => Promise< string | void >;
+  register: () => void;
   verifyToken(): void;
   logout(): void;
 };
@@ -29,25 +29,25 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) 
   const [ auth, setAuth ] = useState<AuthScheme>( initialState );
 
 
-  const login: Login = async ( userData ) => {
-    const { data, error } = await authenticateUser(userData);
-    if ( error ) return error;
+  const login = async ( userData: UserLogin ) => {
+    const result = await authenticateUser(userData);
     
-    if (data.ok) {
-      localStorage.setItem( 'token', data.token );
+    if ( !result.ok ) return result.msg;
 
-      const { user } = data;
-      setAuth({
-        uid: user.uid,
-        name: user.name,
-        email: user.email,
-        checking: false,
-        logged: true
-      });
-    }
+    const { user, token } = result.result;
+
+    localStorage.setItem( 'token', token );
+
+    setAuth({
+      uid: user.uid,
+      name: user.name,
+      email: user.email,
+      checking: false,
+      logged: true
+    });
   };
 
-  const register: Register = ({ name, email, password }) => {
+  const register = () => {
 
   };
 
