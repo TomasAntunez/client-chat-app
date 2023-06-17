@@ -8,8 +8,3 @@ export type LoginResponse = {
     online: boolean;
   }
 }
-
-export type LoginResponseOk = {
-  ok: true;
-  result: LoginResponse
-}

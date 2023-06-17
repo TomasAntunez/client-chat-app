@@ -1,17 +1,14 @@
 
-type WithAuth = false | { key: string, value: string };
+type CustomHeaders = false | Array<{ key: string, value: string }>;
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATH' | 'DELETE';
 
 export type Params = {
   url: string;
   method?: Method
-  withAuth?: WithAuth;
+  customHeaders?: CustomHeaders;
   data?: Object | null;
 };
 
 
-export type ResponseError = {
-  ok: false;
-  msg: string;
-} ;
+export type ErrorMessage = { msg: string }

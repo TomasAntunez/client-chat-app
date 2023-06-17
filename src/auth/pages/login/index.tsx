@@ -9,7 +9,6 @@ export const LoginPage: FC<{}> = () => {
 
   const {
     formData,
-    submitButtonDisabled,
     handleSubmit,
     handleChangeTextFields,
     handleChangeCheckbox
@@ -62,7 +61,6 @@ export const LoginPage: FC<{}> = () => {
 
             <Button
               type="submit"
-              disabled={submitButtonDisabled}
               size="large"
               variant="outlined"
               sx={{ marginTop: 4 }}

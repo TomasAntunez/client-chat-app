@@ -1,13 +1,14 @@
 import React, { createContext, useState, useCallback } from 'react';
 
-import { AuthScheme, UserLogin } from '../types';
+import { AuthScheme, UserLogin, UserRegister } from '../types';
 import { authenticateUser } from '../services';
+import { ResponseError, reportError, ErrorMessage } from '..';
 
 
 type ContextProps = {
   auth: AuthScheme;
-  login: (data: UserLogin) => Promise< string | void >;
-  register: () => void;
+  login: (data: UserLogin) => Promise< void | ErrorMessage >;
+  register: (data: UserRegister) => Promise< void | ErrorMessage >;
   verifyToken(): void;
   logout(): void;
 };
@@ -30,26 +31,33 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) 
 
 
   const login = async ( userData: UserLogin ) => {
-    const result = await authenticateUser(userData);
-    
-    if ( !result.ok ) return result.msg;
+    try {
+      const result = await authenticateUser( userData );
+      const { token, user } = result;
 
-    const { user, token } = result.result;
+      localStorage.setItem( 'token', token );
 
-    localStorage.setItem( 'token', token );
+      setAuth({
+        uid: user.uid,
+        name: user.name,
+        email: user.email,
+        checking: false,
+        logged: true
+      });
 
-    setAuth({
-      uid: user.uid,
-      name: user.name,
-      email: user.email,
-      checking: false,
-      logged: true
-    });
+    } catch (error) {
+      if ( error instanceof ResponseError ) {
+        return { msg: 'The email or password is wrong' };
+      }
+      return reportError(error);
+    }
   };
 
-  const register = () => {
+
+  const register = async ( userData: UserRegister ) => {
 
   };
+
 
   const verifyToken = useCallback( () => {
 

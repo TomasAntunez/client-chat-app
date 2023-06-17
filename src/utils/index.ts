@@ -1,5 +1,3 @@
-import { ResponseError } from '../types';
-
 
 export const objLocalStorage = {
 
@@ -40,10 +38,7 @@ export const objLocalStorage = {
 }
 
 
-export const reportError = (error: unknown): ResponseError => {
+export const reportError = (error?: unknown): { msg: string } => {
   console.log(error);
-  return {
-    ok: false,
-    msg: 'Something is not right'
-  };
+  return { msg: 'Something is not right' };
 };

@@ -1,28 +1,20 @@
-import { queryAPI, reportError, QueryResultError, ResponseError } from '..';
-import { UserLogin, LoginResponse, LoginResponseOk } from '../types';
+import { queryAPI, backendRoutes } from '..';
+import { UserLogin, LoginResponse, UserRegister } from '../types';
 
 
-export const authenticateUser = async (
-  userLoginData: UserLogin
-): Promise< LoginResponseOk | ResponseError > => {
-  try {
-    const result = await queryAPI<LoginResponse>({
-      url: 'auth/login',
-      method: 'POST',
-      data: userLoginData
-    });
-    
-    if ( result instanceof QueryResultError ) return {
-      ok: false,
-      msg: 'The email or the password are incorrect'
-    }
-
-    return {
-      ok: true,
-      result
-    };
-
-  } catch (error) {
-    return reportError(error);
-  }
+export const authenticateUser = async (userLoginData: UserLogin ): Promise<LoginResponse> => {
+  return await queryAPI<LoginResponse>({
+    url: `${backendRoutes.AUTH}/login`,
+    method: 'POST',
+    data: userLoginData
+  });
 };
+
+
+export const createAccount = async ( userRegisterData: UserRegister ) => {
+  return await queryAPI({
+    url: `${backendRoutes.AUTH}/register`,
+    method: 'POST',
+    data: userRegisterData
+  });
+}

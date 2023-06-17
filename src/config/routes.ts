@@ -5,7 +5,6 @@ export enum routes {
     AUTH = "auth"
 }
 
-export enum authRoutes {
-    LOGIN = "login",
-    REGISTER = "register",
+export enum backendRoutes {
+    AUTH = "auth"
 }

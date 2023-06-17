@@ -1,3 +1,3 @@
 
-export { LoginPage } from './Login';
-export { RegisterPage } from './Register';
+export { LoginPage } from './login';
+export { RegisterPage } from './register';

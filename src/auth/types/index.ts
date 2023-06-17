@@ -9,6 +9,14 @@ export type AuthScheme = {
     logged: boolean;
 }
 
+export type RegisterScheme = {
+    name: string;
+    email: string;
+    password: string;
+    repeatPassword: string;
+}
+
+export type UserRegister = Omit< RegisterScheme, "repeatPassword" >
 
 export type LoginScheme = {
     email: string;
@@ -19,13 +27,6 @@ export type LoginScheme = {
 export type UserLogin = Omit< LoginScheme, "rememberme" >;
 
 export type RememberedUser = Omit< LoginScheme, "password" >;
-
-
-export type RegisterScheme = {
-    name: string;
-    email: string;
-    password: string;
-}
 
 
 export * from './response-types';

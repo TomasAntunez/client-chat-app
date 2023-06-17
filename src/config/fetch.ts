@@ -4,7 +4,7 @@ import { Params }  from '../types';
 const baseUrl = process.env.REACT_APP_API_URL;
 
 
-export class QueryResultError {
+export class ResponseError {
   constructor(
     public status: number,
     public detail: any
@@ -15,15 +15,17 @@ export class QueryResultError {
 export const queryAPI = async <ResponseData = any>({
   url,
   method = 'GET',
-  withAuth = false,
+  customHeaders = false,
   data = null
-}: Params ): Promise< ResponseData | QueryResultError > => {
+}: Params ): Promise< ResponseData > => {
 
   const headers = new Headers({ "Content-type": 'application/json' });
 
-  if (withAuth) {
-    const { key, value } = withAuth;
-    headers.append( key, value );
+  if (customHeaders) {
+    customHeaders.forEach( header => {
+      const { key, value } = header;
+      headers.append( key, value );
+    });
   }
 
   const response = await fetch( `${baseUrl}/${url}`, {
@@ -32,9 +34,9 @@ export const queryAPI = async <ResponseData = any>({
     body: JSON.stringify(data)
   });
 
-  const result: ResponseData | any = await response.json();
+  const result: ResponseData = await response.json();
 
   if ( response.ok ) return result;
 
-  return new QueryResultError( response.status, result );
+  throw new ResponseError( response.status, result );
 };

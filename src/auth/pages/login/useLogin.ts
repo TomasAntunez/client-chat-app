@@ -3,7 +3,7 @@ import { ValidationError } from 'yup';
 import { useNavigate } from 'react-router-dom';
 
 import { LoginScheme, RememberedUser } from '../../types';
-import { loginSchema } from '../../validators';
+import { loginScheme } from '../../validators';
 import { useAuth } from '../../hooks';
 
 import { useAlert, objLocalStorage, routes } from '../..';
@@ -23,8 +23,6 @@ export const useLogin = () => {
   const { login } = useAuth();
 
   const [ formData, setFormData ] = useState<LoginScheme>( initialState );
-
-  const [ submitButtonDisabled ] = useState<boolean>( false );
 
 
   useEffect( () => {
@@ -66,7 +64,7 @@ export const useLogin = () => {
     let cleanData: LoginScheme;
 
     try {
-      cleanData = await loginSchema.validate(formData);
+      cleanData = await loginScheme.validate(formData);
 
     } catch (error) {
       if ( error instanceof ValidationError ) {
@@ -95,7 +93,7 @@ export const useLogin = () => {
 
     const error = await login({ email, password });
     if (error) {
-      showError(error);
+      showError(error.msg);
       return;
     }
 
@@ -106,7 +104,6 @@ export const useLogin = () => {
     formData,
     handleSubmit,
     handleChangeTextFields,
-    handleChangeCheckbox,
-    submitButtonDisabled
+    handleChangeCheckbox
   }
 };
