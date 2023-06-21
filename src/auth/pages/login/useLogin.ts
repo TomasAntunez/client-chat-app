@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ValidationError } from 'yup';
-import { useNavigate } from 'react-router-dom';
 
 import { LoginScheme, RememberedUser } from '../../types';
 import { loginScheme } from '../../validators';
 import { useAuth } from '../../hooks';
 
-import { useAlert, objLocalStorage, routes } from '../..';
+import { useAlert, objLocalStorage } from '../..';
 
 
 const initialState: LoginScheme = {
@@ -16,8 +15,6 @@ const initialState: LoginScheme = {
 };
 
 export const useLogin = () => {
-
-  const navigate = useNavigate();
 
   const { showError } = useAlert();
   const { login } = useAuth();
@@ -96,8 +93,6 @@ export const useLogin = () => {
       showError(error.msg);
       return;
     }
-
-    navigate( `/${routes.CHAT}` );
   };
 
   return {

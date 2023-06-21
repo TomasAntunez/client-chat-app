@@ -10,7 +10,6 @@ export const authenticateUser = async (userLoginData: UserLogin ): Promise<Login
   });
 };
 
-
 export const createAccount = async ( userRegisterData: UserRegister ) => {
   return await queryAPI({
     url: `${backendRoutes.AUTH}/register`,
@@ -18,3 +17,11 @@ export const createAccount = async ( userRegisterData: UserRegister ) => {
     data: userRegisterData
   });
 }
+
+export const renewToken = async () => {
+  return await queryAPI({
+    url: `${backendRoutes.AUTH}/renew`,
+    method: 'GET',
+    withAuth: true
+  });
+};

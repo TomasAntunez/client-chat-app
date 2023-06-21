@@ -1,7 +1,7 @@
 import React, { createContext, useState, useCallback } from 'react';
 
 import { AuthScheme, UserLogin, UserRegister } from '../types';
-import { authenticateUser } from '../services';
+import { authenticateUser, createAccount, renewToken } from '../services';
 import { ResponseError, reportError, ErrorMessage } from '..';
 
 
@@ -20,7 +20,7 @@ const initialState: AuthScheme = {
   uid: '',
   name: '',
   email: '',
-  checking: true,
+  checked: false,
   logged: false
 };
 
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) 
         uid: user.uid,
         name: user.name,
         email: user.email,
-        checking: false,
+        checked: true,
         logged: true
       });
 
@@ -55,16 +55,64 @@ export const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) 
 
 
   const register = async ( userData: UserRegister ) => {
+    try {
+      const { token, user } = await createAccount( userData );
 
+      localStorage.setItem( 'token', token );
+
+      setAuth({
+        uid: user.uid,
+        name: user.name,
+        email: user.email,
+        checked: true,
+        logged: true
+      });
+
+    } catch (error) {
+      if ( error instanceof ResponseError ) {
+        if (error.status === 400) {
+          return { msg: error.detail.msg };
+        }
+      }
+      return reportError(error);
+    }
   };
 
 
-  const verifyToken = useCallback( () => {
+  const verifyToken = useCallback( async () => {
+    try {
+      const { token, user } = await renewToken();
 
+      localStorage.setItem('token', token);
+      setAuth({
+        uid: user.uid,
+        name: user.name,
+        email: user.email,
+        checked: true,
+        logged: true
+      });
+
+      return true;
+
+    } catch (error) {
+      if (error instanceof ResponseError) {
+        setAuth({
+          ...initialState,
+          checked: true
+        });
+      }
+
+      return false;
+    }
   }, [] );
 
-  const logout = () => {
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    setAuth({
+      ...initialState,
+      checked: true
+    });
   };
 
 

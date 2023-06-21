@@ -1,16 +1,18 @@
 import { AppRouter } from "./Router";
 import { ThemeConfig } from "./config";
 import { AuthProvider } from './auth';
-import { AlertProvider } from './context';
+import { AlertProvider, SocketProvider } from './context';
 
 
 function App() {
   return (
     <ThemeConfig>
       <AuthProvider>
-        <AlertProvider>
-          <AppRouter />
-        </AlertProvider>
+        <SocketProvider>
+          <AlertProvider>
+            <AppRouter />
+          </AlertProvider>
+        </SocketProvider>
       </AuthProvider>
     </ThemeConfig>
   );

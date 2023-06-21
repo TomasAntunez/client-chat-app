@@ -4,6 +4,7 @@ import { ValidationError } from 'yup';
 import { RegisterScheme } from '../../types';
 import { registerScheme } from '../../validators';
 import { useAlert } from '../..';
+import { useAuth } from '../../hooks';
 
 
 const initialState: RegisterScheme = {
@@ -16,6 +17,7 @@ const initialState: RegisterScheme = {
 export const useRegister = () => {
 
   const { showError } = useAlert();
+  const { register } = useAuth();
 
   const [ formData, setFormData ] = useState<RegisterScheme>(initialState);
 
@@ -54,7 +56,11 @@ export const useRegister = () => {
       return
     }
 
-    
+    const error = await register( cleanData );
+    if (error) {
+      showError(error.msg);
+      return;
+    }
   }
 
 

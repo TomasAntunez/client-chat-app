@@ -1,14 +1,19 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { routes } from '../';
+import { routes } from '..';
 import { authRoutes } from '../config';
-import { LoginPage } from '../pages';
-import { RegisterPage } from '../pages';
+import { LoginPage, RegisterPage } from '../pages';
 import { AuthLayout } from '../layouts';
+import { useAuth } from '../hooks';
 
 
 export const AuthRouter: React.FC<{}> = () => {
+
+  const { auth: { logged } } = useAuth();
+
+  if ( logged ) return <Navigate to={ `/${routes.CHAT}` } />
+
   return (
     <Routes>
       <Route element={ <AuthLayout /> }>

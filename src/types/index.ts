@@ -1,11 +1,12 @@
 
-type CustomHeaders = false | Array<{ key: string, value: string }>;
+type CustomHeaders = false | Array<[ key: string, value: string ]>;
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATH' | 'DELETE';
 
 export type Params = {
   url: string;
-  method?: Method
+  method?: Method;
+  withAuth?: boolean;
   customHeaders?: CustomHeaders;
   data?: Object | null;
 };

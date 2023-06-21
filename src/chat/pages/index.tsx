@@ -8,7 +8,7 @@ export const ChatPage: React.FC<{}> = () => {
   return (
     <Grid container>
       <Grid item xs={4}>
-        <Inbox />
+        <Inbox/>
       </Grid>
       <Grid item xs={8}>
         <Chat />

@@ -5,7 +5,7 @@ export type AuthScheme = {
     uid: string;
     name: string;
     email: string;
-    checking: boolean;
+    checked: boolean;
     logged: boolean;
 }
 

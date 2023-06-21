@@ -1,8 +1,14 @@
 import React from 'react'
 import { Paper, Button, Typography } from '@mui/material';
 
+import { useAuth } from '../..';
+
 
 export const HeaderInbox: React.FC<{}> = () => {
+
+  const { auth: { name }, logout } = useAuth();
+
+
   return (
     <Paper
       elevation={4}
@@ -18,15 +24,16 @@ export const HeaderInbox: React.FC<{}> = () => {
       }}
     >
       <Typography variant='h4'>
-        Recent
+        { name }
       </Typography>
 
       <Button
         style={{ textTransform: 'none' }}
         variant='outlined'
         sx={{ py: 0, fontSize: 15 }}
+        onClick={ logout }
       >
-        My Profile
+        Sign Off
       </Button>
     </Paper>
   )

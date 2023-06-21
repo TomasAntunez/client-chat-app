@@ -7,5 +7,7 @@ export * from '../types'
 
 
 // EXPORTS
-export * from './routes';
+export * from './routers';
 export * from './context';
+export * from './hooks';
+export * from './config';

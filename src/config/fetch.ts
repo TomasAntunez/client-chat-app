@@ -15,24 +15,39 @@ export class ResponseError {
 export const queryAPI = async <ResponseData = any>({
   url,
   method = 'GET',
+  withAuth = false,
   customHeaders = false,
   data = null
 }: Params ): Promise< ResponseData > => {
 
   const headers = new Headers({ "Content-type": 'application/json' });
 
+  if (withAuth) {
+    const token = localStorage.getItem('token');
+    if (!token) throw new ResponseError( 401, { msg: 'No token' } );
+    headers.append('x-token', token);
+  }
+
   if (customHeaders) {
     customHeaders.forEach( header => {
-      const { key, value } = header;
-      headers.append( key, value );
+      headers.append( header[0], header[1] );
     });
   }
 
-  const response = await fetch( `${baseUrl}/${url}`, {
-    method,
-    headers,
-    body: JSON.stringify(data)
-  });
+  let response: Response;
+
+  if ( method === 'GET' ) {
+    response = await fetch( `${baseUrl}/${url}`, {
+      method,
+      headers
+    });
+  } else {
+    response = await fetch( `${baseUrl}/${url}`, {
+      method,
+      headers,
+      body: JSON.stringify(data)
+    });
+  }
 
   const result: ResponseData = await response.json();
 
