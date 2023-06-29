@@ -4,9 +4,14 @@ import { Box } from '@mui/material';
 import { HeaderChat } from './HeaderChat';
 import { Messages } from './Messages';
 import { MessageForm } from './MessageForm';
+import { useChat } from '../../hooks';
 
 
 export const Chat: React.FC<{}> = () => {
+
+  const { chatState: { activeChat } } = useChat();
+
+
   return (
     <Box sx={{
       display: 'flex',
@@ -14,9 +19,15 @@ export const Chat: React.FC<{}> = () => {
       height: '100vh',
       borderLeft: 1
     }}>
-      <HeaderChat />
-      <Messages />
-      <MessageForm />
+      {
+        activeChat && (
+          <>
+            <HeaderChat />
+            <Messages />
+            <MessageForm />
+          </>
+        )
+      }
     </Box>
   )
 }

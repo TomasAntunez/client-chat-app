@@ -23,10 +23,14 @@ export const SocketProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 
 
   const connectSocket = useCallback( () => {
+
+    const token = localStorage.getItem('token');
+
     const temporarySocket = io( process.env.REACT_APP_BACKEND_URL, {
       transports: ['websocket'],
       autoConnect: true,
-      forceNew: true
+      forceNew: true,
+      query: { 'x-token': token }
     });
     setSocket( temporarySocket );
   }, []);
