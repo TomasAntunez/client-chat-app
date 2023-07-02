@@ -2,11 +2,19 @@ import React from 'react'
 import { Paper, Button, Typography } from '@mui/material';
 
 import { useAuth } from '../..';
+import { actionTypes } from '../../context';
+import { useChat } from '../../hooks';
 
 
 export const HeaderInbox: React.FC<{}> = () => {
 
   const { auth: { name }, logout } = useAuth();
+  const { dispatch } = useChat();
+
+  const signOff = () => {
+    dispatch({ type: actionTypes.CLEAR_CHAT });
+    logout();
+  }
 
 
   return (
@@ -31,7 +39,7 @@ export const HeaderInbox: React.FC<{}> = () => {
         style={{ textTransform: 'none' }}
         variant='outlined'
         sx={{ py: 0, fontSize: 15 }}
-        onClick={ logout }
+        onClick={ signOff }
       >
         Sign Off
       </Button>

@@ -5,6 +5,7 @@ import { userImage } from '../../assets/images';
 import { useChat } from '../../hooks';
 import { useAuth, themePalette } from '../../';
 import { actionTypes } from '../../context';
+import { getMessages } from '../../services';
 
 
 export const ContactsInbox: React.FC<{}> = () => {
@@ -13,11 +14,22 @@ export const ContactsInbox: React.FC<{}> = () => {
   const { auth: { uid } } = useAuth();
 
 
-  const handleClick = (id: string) => {
+  const handleClick = async (id: string) => {
     dispatch({
       type: actionTypes.ACTIVATE_CHAT,
       payload: id
-    })
+    });
+
+    try {
+      const response = await getMessages(id);
+      dispatch({
+        type: actionTypes.LOAD_MESSAGES,
+        payload: response.messages
+      });
+      
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 

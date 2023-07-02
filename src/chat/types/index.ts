@@ -1,11 +1,11 @@
-import { ResponseUser } from './response-types';
+import { ResponseUser, ResponseMessage } from './response-types';
 
 export type ChatState = {
   uid: string;
   activeChat: string | null;
   users: Array<ResponseUser>;
-  messages: Array<any>;
+  messages: Array<ResponseMessage>;
 }
 
 
-export { type ResponseUser } from './response-types';
+export { type ResponseUser, type ResponseMessage } from './response-types';

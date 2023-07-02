@@ -6,5 +6,6 @@ export enum routes {
 }
 
 export enum backendRoutes {
-    AUTH = "auth"
+    AUTH = "auth",
+    MESSAGES = "messages"
 }

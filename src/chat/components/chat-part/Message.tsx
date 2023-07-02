@@ -5,16 +5,19 @@ import { themePalette } from '../..';
 
 
 type MessageProps = {
-  type: 'sent' | 'received'
+  type: 'sent' | 'received';
+  message: string;
 }
 
-export const Message: React.FC<MessageProps> = ({ type }) => {
+export const Message: React.FC<MessageProps> = ({ type, message }) => {
   return (
-    <Box sx={{
-      width: '100%',
-      display: 'flex',
-      justifyContent: `${ (type === 'sent') ? 'right' : 'left' }`
-    }}>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: `${ (type === 'sent') ? 'right' : 'left' }`
+      }}
+    >
       <Box
         sx={{
           maxWidth: '80%',
@@ -25,7 +28,7 @@ export const Message: React.FC<MessageProps> = ({ type }) => {
         }}
       >
         <Typography sx={{ fontSize: 14 }}>
-            An input messagewerg464ewrg654ew6r5g46ew5r4g65e4w e65r4g we56r 65w4ere 6r5g4we6r54
+            { message }
         </Typography>
       </Box>
     </Box>

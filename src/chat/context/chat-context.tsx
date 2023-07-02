@@ -1,7 +1,7 @@
 import { FC, Dispatch, createContext, useReducer, useEffect } from 'react';
 
 import { chatReducer, actionTypes } from './chat-reducer';
-import { ChatState, ResponseUser } from '../types';
+import { ChatState, ResponseUser, ResponseMessage } from '../types';
 import { useSocket } from '../';
 
 
@@ -13,7 +13,7 @@ type ContextProps = {
 export const ChatContext = createContext<ContextProps | null>(null);
 
 
-const initialState: ChatState = {
+export const initialState: ChatState = {
   uid: '',
   activeChat: null,
   users: [],
@@ -39,10 +39,13 @@ export const ChatProvider: FC<{ children: JSX.Element }> = ({ children }) => {
   }, [socket]);
 
   useEffect(() => {
-    socket?.on( 'personal-message', payload => {
+    socket?.on( 'personal-message', (payload: ResponseMessage) => {
       console.log(payload);
-      // TODO: dispatch
-      // TODO: move the scroll to the end
+      
+      dispatch({
+        type: actionTypes.NEW_MESSAGE,
+        payload: payload
+      })
     });
   }, [socket]);
 
